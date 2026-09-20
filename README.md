@@ -4,7 +4,7 @@
 
 FreshPeek uses a Raspberry Pi camera, multimodal AI, Supabase, and an iOS app to record food entering or leaving a refrigerator. It helps users see what they have, use expiring food first, and generate recipes from selected ingredients—without buying a new smart fridge.
 
-> FreshPeek is currently a single-user MVP. The prototype camera can be mounted inside a normal refrigerator; a cardboard enclosure is also used as a safe development and demo rig.
+> FreshPeek is a retrofit system: mount the compact camera module inside an existing refrigerator and add AI inventory management without replacing the appliance or scanning barcodes.
 
 ## What it does
 
@@ -16,6 +16,36 @@ FreshPeek uses a Raspberry Pi camera, multimodal AI, Supabase, and an iOS app to
 - Reuses known shelf-life rules and asks Qwen for a default only when a food is new.
 - Shows inventory in a SwiftUI app, sorted by expiration urgency.
 - Supports manual add, edit, swipe-to-delete, notification preferences, and AI recipe generation.
+
+## Engineering highlights
+
+### Temporal multimodal reasoning
+
+FreshPeek sends a labeled, time-ordered burst instead of relying on a single image. The vision model tracks the food itself across frames, distinguishes multiple items in one door event, identifies each item, and determines whether its trajectory is entering or leaving.
+
+### Camera-aware edge capture
+
+The Raspberry Pi performs continuous sensing locally. Separate open/close brightness thresholds provide hysteresis, while a 5.5 ms locked exposure reduces hand-motion blur. Frames are captured every 200 ms and automatic exposure is restored after each event.
+
+### Hybrid AI pipeline
+
+The system supports OpenAI vision for temporal food recognition and a Qwen-VL-compatible fallback. Qwen also powers shelf-life estimation and recipe generation in the cloud, allowing each model to be used for the task it handles best.
+
+### Reliable event processing
+
+Every recognition event receives a stable event ID. Supabase Edge Functions validate the device, normalize the result, and execute inventory changes through PostgreSQL transactions. Idempotency prevents duplicate updates, and failed Pi uploads are saved locally for retry.
+
+### Confidence-aware inventory matching
+
+The backend combines normalized food names with visual reference frames. For uncertain outgoing events, it can compare the new observation against stored inventory images before removing an item. Reference images remain in private storage and are not displayed in the app.
+
+### Reusable shelf-life knowledge
+
+Shelf-life estimates are cached in a database rule table. Known foods reuse the existing rule immediately; only previously unseen foods require a new model call.
+
+### Complete product loop
+
+The SwiftUI app turns recognition events into an actionable experience: urgency-based sorting, red/orange/green freshness states, editable records, manual correction, local reminders, cuisine preferences, and recipe generation from selected expiring ingredients.
 
 ## System architecture
 
@@ -136,10 +166,3 @@ The cloud uploader adds an event ID and the captured frames before calling `inge
 ## Security
 
 No live API keys, device tokens, app tokens, database passwords, or Apple signing credentials are stored in this repository. Keep real values only in ignored environment files and Supabase Secrets. If a credential is ever committed, rotate it before deleting it from Git history.
-
-## MVP limitations
-
-- The current product is optimized for one user and one refrigerator.
-- Recognition accuracy depends on lighting, occlusion, motion speed, and camera placement.
-- Food is tracked as present or absent; package-level quantity is not yet modeled.
-- The current capture loop processes recognition synchronously. A persistent event queue is planned for rapid consecutive door events.
