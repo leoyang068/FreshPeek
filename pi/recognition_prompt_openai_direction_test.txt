@@ -1,0 +1,13 @@
+The images are one event in strict chronological order. Each image is preceded by its FRAME number.
+
+Track the food item itself, not the hand. List the frames in which the food is visible and its vertical position: upper, middle, or lower. Use the first and last visible positions to determine its vertical movement. Do not infer movement direction from disappearance alone.
+
+For this fixed camera:
+- movement toward the TOP of the image means "in"
+- movement toward the BOTTOM of the image means "out"
+
+Ignore horizontal movement. Empty-hand motion is supporting context only.
+
+Use only "upper", "middle", or "lower" for vertical_position, and only "in" or "out" for direction.
+Return only valid JSON without Markdown, using this shape:
+{"observations":[{"frame":0,"vertical_position":"upper"}],"description":"Briefly describe the food's observed vertical movement.","direction":"in"}

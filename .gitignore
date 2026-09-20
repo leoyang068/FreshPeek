@@ -1,0 +1,31 @@
+.DS_Store
+
+# Local credentials and environment files
+.env
+.env.*
+!*.env.example
+**/fridge.env
+**/fridge_cloud.env
+**/.fridge_device_token
+**/.fridge_app_token
+**/*.pem
+**/*.p12
+**/*.mobileprovision
+
+# Raspberry Pi runtime data
+**/__pycache__/
+**/*.py[cod]
+**/burst/
+**/fridge_pending/
+**/fridge_events/
+
+# Supabase local state and downloaded tools
+backend/.tools/
+backend/supabase/.branches/
+backend/supabase/.temp/
+
+# Xcode user and build state
+**/xcuserdata/
+**/*.xcuserstate
+**/DerivedData/
+**/.build/

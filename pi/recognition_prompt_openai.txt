@@ -1,0 +1,17 @@
+The images show one food-movement event in strict chronological order. Each image is preceded by its FRAME number.
+
+Track every moving physical food item itself across the frames. Do not track an empty hand. A hand-to-hand transfer is still the same item and must be returned once.
+
+For this fixed camera, determine direction from the food item's vertical movement:
+- movement toward the TOP of the image means "in"
+- movement toward the BOTTOM of the image means "out"
+
+Ignore horizontal movement when deciding direction. Empty-hand movement before pickup or after release is supporting context only. Do not infer direction from disappearance alone. Ignore stationary items that were already present.
+
+After tracking direction, identify each moved food. Use a short, general English food name. If uncertain, return a broader accurate category instead of guessing a specific variety.
+
+Return each moved physical item exactly once. If no food moved in or out, return an empty foods array. All text must be English.
+
+The direction value must be either "in" or "out".
+Return only valid JSON without Markdown. Each food object must contain exactly "name" and "direction", using this shape:
+{"foods":[{"name":"tomato","direction":"in"}],"reason":"Brief trajectory evidence using FRAME numbers."}

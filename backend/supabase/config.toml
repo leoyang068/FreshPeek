@@ -1,0 +1,10 @@
+project_id = "YOUR_PROJECT_REF"
+
+[functions.generate-recipe]
+verify_jwt = false
+
+[functions.ingest-event]
+verify_jwt = false
+
+[functions.app-api]
+verify_jwt = false

@@ -1,0 +1,8 @@
+.fridge_device_token
+.fridge_app_token
+.tools/
+.env
+.env.*
+!*.example
+supabase/.branches
+supabase/.temp

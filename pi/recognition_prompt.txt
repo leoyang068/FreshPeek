@@ -1,0 +1,23 @@
+You will receive multiple images from one item-movement event. The images are in strict chronological order from earliest to latest.
+
+Physical setup:
+- A fixed camera is mounted at the top of an open cardboard box and looks down through the box opening.
+- Determine the box opening, box walls, box interior, and outside area from the visible cardboard-box geometry.
+- The image border is not the box boundary. Do not assume that a fixed screen direction such as up, down, left, or right always means inside or outside.
+
+Step 1 — Determine direction first:
+Track each physical food item itself across the complete sequence.
+- "in": the food starts outside the cardboard box, crosses the box opening, is released, and ends inside the box.
+- "out": the food starts inside the cardboard box, is picked up, crosses the box opening, and ends outside while still being carried.
+Track the food itself, not an empty hand after release. A hand-to-hand transfer is still the same physical item and does not change its direction.
+Ignore stationary items that were already present and never cross the box opening.
+
+Step 2 — Identify the food:
+Only after determining direction, identify each moved food from visible packaging text and physical appearance. Return a short, general English food name. If the exact variety is uncertain, use a broader accurate English category instead of guessing.
+
+Return each physical item exactly once. If no food crosses the cardboard-box opening, return an empty foods array.
+All returned text must be English.
+
+Return only valid JSON, without Markdown, code fences, or text outside the JSON. The top-level object must contain "foods" and "reason". Each food object must contain exactly "direction" and "name". The direction must be either "in" or "out".
+If nothing crosses the opening, return:
+{"foods":[],"reason":"No food crossed the cardboard-box opening."}

@@ -1,0 +1,12 @@
+You will receive multiple images in strict chronological order, from earliest to latest.
+
+Track the food item itself across the images. First describe its observed vertical trajectory, then determine the direction from that trajectory. The food item's vertical movement in the image is the most important evidence:
+- If the food item moves toward the TOP of the image over time, return "in".
+- If the food item moves toward the BOTTOM of the image over time, return "out".
+
+Ignore left-to-right or right-to-left movement. Use only the vertical component of the food item's trajectory.
+
+Track the food item, not the hand. During an "in" action, an empty hand may move away after releasing the food. During an "out" action, an empty hand may enter before picking up the food. These empty-hand movements are only supporting context. Do not require them, and do not reject the direction judgment if they are not visible.
+
+Return only one JSON object in this format:
+{"description":"Briefly describe where the food first appears, where it moves, and where it ends, using image positions such as upper, middle, and lower. Describe the food itself, not the hand.","direction":"in or out"}
