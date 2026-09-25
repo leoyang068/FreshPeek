@@ -4,6 +4,13 @@
   <img src="docs/FreshPeek-project-cover.png" alt="FreshPeek retrofit smart-fridge prototype" width="560">
 </p>
 
+<p align="center">
+  <strong>Watch FreshPeek in action:</strong><br>
+  <a href="https://youtube.com/shorts/s7KP4uPT4Oc?feature=share"><strong>▶ 中文演示</strong></a>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="https://youtube.com/shorts/0xoIbTbGGrI?feature=share"><strong>▶ English Demo</strong></a>
+</p>
+
 **A smart add-on that turns an ordinary refrigerator into an AI-assisted food tracker.**
 
 FreshPeek uses a Raspberry Pi camera, multimodal AI, Supabase, and an iOS app to record food entering or leaving a refrigerator. It helps users see what they have, use expiring food first, and generate recipes from selected ingredients—without buying a new smart fridge.
